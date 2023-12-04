@@ -1,0 +1,86 @@
+body{
+    background-image: radial-gradient(circle at 50% -20.71%, #ff9ec7 0, #ff7fa5 12.5%, #ff5c83 25%, #ff2c5f 37.5%, #ff0061 50%, #e3006d 62.5%, #d10077 75%, #c00080 87.5%, #b20089 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+form{
+    width: 600px;
+    border:  2px solid #ff479a;
+    padding: 6rem;
+    background-color: #ff4c85;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+}
+
+h1{
+    display: block;
+    border: 2px solid #d8407b;
+    width: 95%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+label{
+    color: #bc3a8c;
+    font-size: 18px;
+    padding: 11px;
+    font-weight: 350;
+}
+
+input{
+    display: block;
+    border: 2px solid #e625bc;
+    width: 95%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+button{
+    float: right;
+    background-color: #ff1e8a;
+    padding: .5rem;
+    color: white;
+    border: none;
+    width: 60%;
+    border-radius: 5px;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+button:hover{
+    background-color: white;
+    color: black;
+}
+
+a{
+    float: left;
+    margin-left: 10px;
+    padding: .5rem;
+    text-decoration: none;
+    color: #fff;
+}
+a:hover{
+    color: #fff;
+}
+
+.error{
+    background-color: #ff4a4a;
+    color: black;
+    padding: 10px;
+    width: 95%;
+    border-radius: 5px;
+    margin: 20px auto;
+}
+
+.logo {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Add some space between the logo and form */
+}

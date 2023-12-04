@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="tablas.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTICULOS</title>
+</head>
+<header>
+    <img id="logo" src="logotablas.jpeg" alt="Logotipo de la empresa">
+    <h1>ARTICULOS</h1>
+  </header>
+<body>
+    <section><div class ="contenerdor">
+                <h2>  </h2><br />              
+                <form  action="Acciones.php" method="post" class ="TABLA_ARTUCULOS">
+                        <div class="atributos">
+                            <label for =""> ID ARTICULO</font></label>
+                            <br>
+                            <input type ="text" name="ID_ARTICULO" id="ID_ARTICULO" />        
+                        </div>                   
+                            <div class="atributos">
+                                <label for="">ID CATEGORIA</font></label>
+                                <br>
+                                <input type="text" name="ID_CATEGORIA"  id="ID_CATEGORIA" />
+
+                            </div>                    
+                            <div class="atributos">
+                                <label for="" >Precio</font></label>
+                                <br>
+                                <input type="text" name="Precio" id="Precio"  />
+                            </div>
+                            <div class="atributos">
+                                <label for="">Cantidad</font></label>
+                                <br>
+                                <input type="text" name="Cantidad" id="Cantidad" />
+
+                            </div>                
+                           
+                            <div class="atributos">
+                                <label for="" >Fecha de Compra</font></label>
+                                <br>
+                                <input type="text" name="Fecha_compra" id="Fecha_compra" />
+                            </div> 
+                            <div class="atributos">
+                                <label for="" >ID CLIENTE</font></label>
+                                <br>
+                                <input type="text" name="ID_CLIENTE" id="ID_CLIENTE" />
+                            </div> 
+                            <div class="atributos">
+                                <label for="" >Nombre del articulo</font></label>
+                                <br>
+                                <input type="text" name="Nombre" id="Nombre" />
+                            </div> 
+                            
+                            <br>
+
+                            <div class ="botones">
+                                
+                                <button  type="submit" name="insertar" id="insertar">INSERTAR</button>
+                                <button  type="submit" name="eliminar" id="eliminar">BORRAR</button>
+                                <button  type="submit" name="actualizar" id="actualizar">ACTUALIZAR</button> 
+                                <button  type="submit" name="principal" id="principal"><a href="index.html">Inicio </a></button> 
+                            </div>                            
+                                     </form>            
+                                     
+            </div>     
+        </section>
+    </body>
+</html>

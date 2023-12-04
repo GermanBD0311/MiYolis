@@ -1,0 +1,157 @@
+/* Estilo para el formulario */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 30px;
+    background: rgba(225, 6, 178, 0.888) ;
+    border-radius: 10px;
+    font-family: cursive; /* Fuente en cursiva */
+    box-shadow: 0 0 10px rgb(255, 255, 255);
+  }
+  
+  /* Estilo para los labels dentro del formulario */
+  form label {
+    display: block;
+    margin: 10px 0;
+    color: azure;
+  }
+  
+  /* Estilo para el encabezado del formulario */
+  form header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para el título del formulario */
+  form h1 {
+    font-family: cursive; /* Fuente en cursiva */
+    color: #333;
+  }
+  
+  /* Estilo para el logo en círculo */
+  form .logo {
+    width: 80px;
+    height: 80px;
+    background-color: #3498db;
+    border-radius: 50%; /* Círculo */
+    margin: 0 auto 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+  }
+  #logo {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 3.2cm;
+    height: auto;
+}
+header {
+    background-color: #FF69B4; /* Color de fondo del encabezado */
+    padding: 20px;
+    text-align: center;
+}
+section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: url('fondo.jpg') transparent;
+    background-position: center;
+    background-size: contain;
+}
+/* Estilo para la tabla */
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 800px;
+  background-color: #ffe6e6; /* Fondo rosa claro */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para las celdas de la tabla */
+table, th, td {
+  border: 1px solid #ff9999; /* Borde rosa claro */
+}
+
+/* Estilo para las cabeceras de la tabla */
+th {
+  background-color: #ff6666; /* Fondo rosa medio */
+  color: rgb(174, 14, 123);
+  font-family: cursive; /* Fuente en cursiva */
+}
+
+/* Estilo para las filas pares de la tabla */
+tr:nth-child(even) {
+  background-color: #ffd9d9; /* Fondo rosa más claro */
+}
+
+/* Estilo para las letras en la tabla */
+td, th {
+  padding: 10px;
+  text-align: center;
+  font-family: cursive; /* Fuente en cursiva */
+  color: #cc0066; /* Color de texto rosa oscuro */
+}
+body{
+  color: #000000;
+}
+.section1{
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background:  #ffd9d9;;
+  background-position: center;
+  background-size: contain;
+}
+/* Estilo para el botón rosa */
+button {
+  display: inline-block;
+  padding: 8px 11px;
+  font-size: 10px;
+  font-family: cursive; /* Fuente en cursiva */
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  color: #0d0808; /* Texto en blanco */
+  background-color: #f0f0f0; /* Fondo rosa */
+  transition: background-color 0.3s;
+}
+
+/* Estilo para cambiar el color al pasar el mouse sobre el botón */
+button:hover {
+  background-color: #ff3385; /* Fondo rosa más oscuro al pasar el mouse */
+}
+/* Estilo para la caja del mensaje */
+.mensaje {
+  background-color: #ff66b2; /* Color rosa claro */
+  color: #fff; /* Texto blanco */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; /* Para estar encima de la tabla */
+}
+
+.column {
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .column {
+    width: 50%;
+  }
+}

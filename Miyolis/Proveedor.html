@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="tablas.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROVEEDORES</title>
+</head>
+<header>
+    <img id="logo" src="logotablas.jpeg" alt="Logotipo de la empresa">
+    <h1>PROVEEDORES</h1>
+  </header>
+<body>
+    <section><div class ="contenerdor">
+                <h2>  </h2><br />              
+                <form  action="Acciones.php" method="post" class ="TABLA_PROVEEDOR">
+                        <div class="atributos">
+                            <label for =""> ID PROVEEDOR</font></label>
+                            <br>
+                            <input type ="text" name="ID_PROVEEDOR" id="ID_PROVEEDOR" />        
+                        </div>                   
+                            <div class="atributos">
+                                <label for="">ID ARTICULO</font></label>
+                                <br>
+                                <input type="text" name="ID_ARTICULO"  id="ID_ARTICULO" />
+
+                            </div>                    
+                            <div class="atributos">
+                                <label for="" >Nombre</font></label>
+                                <br>
+                                <input type="text" name="Nombre" id="Nombre"  />
+                            </div>
+                            <div class="atributos">
+                                <label for="">Telefono</font></label>
+                                <br>
+                                <input type="text" name="Telefono" id="Telefono" />
+
+                            </div>                
+                           
+                            <div class="atributos">
+                                <label for="" >CUENTA 1</font></label>
+                                <br>
+                                <input type="text" name="NUM_CUENTA1" id="NUM_CUENTA1" />
+                            </div> 
+                            
+                            <div class="atributos">
+                                <label for="" >CUENTA 2</font></label>
+                                <br>
+                                <input type="text" name="NUM_CUENTA2" id="NUM_CUENTA2" />
+                            </div> 
+                            
+                            <br>
+
+                            <div class ="botones">
+                                
+                                <button  type="submit" name="insertar" id="insertar">INSERTAR</button>
+                                <button  type="submit" name="eliminar" id="eliminar">BORRAR</button>
+                                <button  type="submit" name="actualizar" id="actualizar">ACTUALIZAR</button> 
+                                <button  type="submit" name="principal" id="principal"><a href="index.html">Inicio </a></button> 
+                            </div>                            
+                                     </form>            
+                                     
+            </div>     
+        </section>
+    </body>
+</html>
