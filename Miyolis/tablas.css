@@ -155,3 +155,11 @@ button:hover {
     width: 50%;
   }
 }
+.mensaje {
+  background-color: #ff66b2;
+  color: #0d0808; 
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: none;
+}

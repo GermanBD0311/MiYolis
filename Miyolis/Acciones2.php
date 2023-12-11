@@ -1,131 +1,151 @@
-<?php 
-$conn =oci_connect('system','huracan0311','localhost/xe');
-if(!$conn){
-    $m= oci_error();
-    echo $m ['message'],"\n";
-    exit;
-}
-else{
-    echo " Bazar Mi Yoli's \n";
-}
-if(isset($_POST['insertar'])){
-    $ID_CATEGORIA=$_POST['ID_CATEGORIA'];
-    $NOMBRE_C=$_POST['Nombre'];
-    $PUBLICO=$_POST['Publico'];
-    $MARCA=$_POST['Marca'];
-    $s=oci_parse($conn, "SELECT * FROM CATEGORIA");
-    $res=oci_execute($s);
-    $boleano=false;
-    while ($row=oci_fetch_array($s)){
-        if($ID_CATEGORIA==$row[0]){
-            $boleano=true;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="tablas.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTÍCULOS</title>
+    <style>
+        .mensaje {
+            background-color: #ff66b2;
+            color: #0d0808; 
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: none;
         }
+    </style>
+</head>
+<header>
+    <img id="logo" src="logotablas.jpeg" alt="Logotipo de la empresa">
+    <h1>ARTÍCULOS</h1>
+    <button type="submit" name="principal" id="principal"><a href="Articulo.html">Volver </a></button>
+</header>
+<section class="section1">
+<body>
+    <?php
+    $mensaje = ''; 
+    $conexion = oci_connect('system', 'huracan0311', 'localhost/xe');
+
+    if (!$conexion) {
+        $m = oci_error();
+        trigger_error(htmlentities($m['message'], ENT_QUOTES), E_USER_ERROR);
     }
-    if($boleano){
-        echo "ya existe el dato <br> ";
-    }else{
-        $isql= "INSERT INTO SYSTEM.CATEGORIA (ID_CATEGORIA, Nombre,Publico, Marca) 
-        VALUES (:ID_CATEGORIA,:NOMBRE,:PUBLICO,:MARCA)";
-        $stmt=oci_parse($conn,$isql);
-        oci_bind_by_name($stmt,":ID_CATEGORIA",$ID_CATEGORIA);
-        oci_bind_by_name($stmt,":NOMBRE",$NOMBRE_C);
-        oci_bind_by_name($stmt,":PUBLICO",$PUBLICO);
-        oci_bind_by_name($stmt,":MARCA",$MARCA);
-        $r= oci_execute($stmt, OCI_DEFAULT);
-        oci_commit($conn);
-        echo "DATOS INSERTADOS CORRECTAMENTE <br /> <br />";
-        $s=oci_parse($conn, "SELECT * FROM CATEGORIA");
-        $res= oci_execute($s);
-        echo "registros existentes <br/> <br />";
-        while($row=oci_fetch_array($s)){
-            echo "ID_CATEGORIA||:      ".$row[0]." ||    NOMBRE   :||".$row[1]."||    PUBLICO   :||".$row[2]."||    MARCA  :||".$row[3]."
-    <br /> _____________________________________________________________________________________________________________________________________________________________________________________________________________|  <br/ >";
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $idArticulo = isset($_POST['ID_ARTICULO']) ? $_POST['ID_ARTICULO'] : null;
+
+        if (isset($_POST['insertar'])) {
+            // Realizar la inserción
+            $idCategoria = $_POST['ID_CATEGORIA']; 
+            $precio = $_POST['PRECIO'];
+            $nombre = $_POST['NOMBRE'];
+
+            $insertar = "INSERT INTO articulo (ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE)
+                         VALUES ('$idArticulo', '$idCategoria', '$precio', '$nombre')";
+            $stid = oci_parse($conexion, $insertar);
+            oci_execute($stid);
+            $mensaje = 'Inserción realizada con éxito.';
+
+            // Consultar y mostrar los resultados actualizados
+            $consulta = 'SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO ORDER BY ID_ARTICULO';
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+        } elseif (isset($_POST['eliminar'])) {
+            // Realizar la eliminación
+            $eliminar = "DELETE FROM articulo WHERE ID_ARTICULO = '$idArticulo'";
+            $stid = oci_parse($conexion, $eliminar);
+            oci_execute($stid);
+            $mensaje = 'Eliminación realizada con éxito.';
+
+            // Consultar todos los artículos después de la eliminación
+            $consulta = 'SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO ORDER BY ID_ARTICULO';
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+        } elseif (isset($_POST['actualizar'])) {
+            // Realizar la actualización
+            $idCategoria = $_POST['ID_CATEGORIA'];
+            $precio = $_POST['PRECIO'];
+            $nombre = $_POST['NOMBRE'];
+
+            $actualizar = "UPDATE articulo
+                           SET ID_CATEGORIA = '$idCategoria', PRECIO = '$precio',
+                               NOMBRE = '$nombre'
+                           WHERE ID_ARTICULO = '$idArticulo'";
+            $stid = oci_parse($conexion, $actualizar);
+            oci_execute($stid);
+            $mensaje = 'Actualización realizada con éxito.';
+
+            // Consultar y mostrar los resultados actualizados
+            $consulta = "SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO WHERE ID_ARTICULO = '$idArticulo'";
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+        } elseif (isset($_POST['buscar'])) {
+            // Si es una búsqueda, consulta todos los artículos o uno específico
+            if ($idArticulo !== null) {
+                $consulta = "SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO WHERE ID_ARTICULO = '$idArticulo'";
+            } else {
+                $consulta = 'SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO ORDER BY ID_ARTICULO';
             }
+
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+        } elseif (isset ($_POST ['consultar'])) {
+            // Consultar todos los artículos
+            $consulta = "SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO ORDER BY ID_ARTICULO";
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
         }
+    } else {
+        // Consultar todos los artículos por defecto
+        $consulta = 'SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO ORDER BY ID_ARTICULO';
+        $stid = oci_parse($conexion, $consulta);
+        oci_execute($stid);
     }
+    ?>
 
-//consultar
-if (isset($_POST['consultar'])){
-    $s= oci_parse($conn,"SELECT * FROM JUGADOR");
-    $res=oci_execute($s);
-    echo "registros existentes <br/> <br />";
-    while($row=oci_fetch_array($s)){
-    echo "ID_JUGADOR||:      ".$row[0]."___ ||    NOMBRE   :||__".$row[1]."__||    APODO   :||__".$row[2]."__||    NUMERO  :||__".$row[3]."__||    POCISION    :||__".$row[4]."__||    PRECIO  :||__".$row[5]."__||    ID_TECNICO  :||__".$row[6]."__||   FECHANAC   :||__".$row[7]."__||     APELLIDO_P  :||__".$row[8]."__||    APELLIDO_M  :||__".$row[9].
-    " <br /> _____________________________________________________________________________________________________________________________________________________________________________________________________________|  <br/ >";
-    }
-    oci_commit($conn);
-    oci_free_statement($s);
-}
+    <!-- Mostrar el mensaje en una caja -->
+    <div class="mensaje" id="mensaje"><?php echo $mensaje; ?></div>
 
+    <!-- Mostrar los resultados en una tabla HTML -->
+    <table border="1">
+        <tr>
+            <th>ID Artículo</th>
+            <th>ID Categoría</th>
+            <th>Precio</th>
+            <th>Nombre</th>
+        </tr>
 
-//actualizacion de los datos de la tabal de jugadores
-
-if(isset($_POST['actualizar'])){
-    $ID_CATEGORIA=$_POST['ID_CATEGORIA'];
-    $NOMBRE_C=$_POST['Nombre'];
-    $PUBLICO=$_POST['Publico'];
-    $MARCA=$_POST['Marca'];
-    $s=oci_parse($conn, "SELECT * FROM CATEGORIA");
-    $res=oci_execute($s);
-    $boleano=false;
-    while ($row=oci_fetch_array($s)){
-        if($ID_CATEGORIA==$row[0]){
-            $boleano=true;
+        <?php
+        // Cambio en la verificación de filas
+        while ($fila = oci_fetch_assoc($stid)) {
+            echo '<tr>';
+            echo '<td>' . $fila['ID_ARTICULO'] . '</td>';
+            echo '<td>' . $fila['ID_CATEGORIA'] . '</td>';
+            echo '<td>' . $fila['PRECIO'] . '</td>';
+            echo '<td>' . $fila['NOMBRE'] . '</td>';
+            echo '</tr>';
         }
-    }
+        ?>
+    </table>
 
-    if(!$boleano){
-        echo "NO existe el dato con esa llave primaria <br> /> <br />";
-    }else{
-        $isql= "UPDATE SYSTEM.CATEGORIA SET  NOMBRE=:NOMBRE, PUBLICO=:Publico, MARCA=:Marca
-         WHERE ID_CATEGORIA=:ID_CATEGORIA";
-        $stmt=oci_parse($conn,$isql);
-        oci_bind_by_name($stmt,":ID_CATEGORIA",$ID_CATEGORIA);
-        oci_bind_by_name($stmt,":NOMBRE",$NOMBRE_C);
-        oci_bind_by_name($stmt,"Publico",$PUBLICO);
-        oci_bind_by_name($stmt,":Marca",$MARCA);
-        $r= oci_execute($stmt, OCI_DEFAULT);
-        oci_commit($conn);
-        echo "DATOS ACTUALIZADOS CORRECTAMENTE <br /> <br />";
-        $s=oci_parse($conn, "SELECT * FROM CATEGORIA");
-        $res= oci_execute($s);
-        echo "registros existentes <br/> <br />";
-        while($row=oci_fetch_array($s)){
-            echo "ID_CATEGORIA||:      ".$row[0]." ||    NOMBRE   :||".$row[1]."||    PUBLICO   :||".$row[2]."||    MARCA  :||".$row[3]."
-            <br /> _____________________________________________________________________________________________________________________________________________________________________________________________________________|  <br/ >";
-                    
-        }
-    }
-    
-}
-if(isset($_POST['eliminar'])){
-    $ID_CATEGORIA=$_POST['ID_CATEGORIA'];
-    $s=oci_parse ($conn,"SELECT * FROM CATEGORIA");
-    $res=oci_execute($s);
-    $boleano=false;
-    while ($row=oci_fetch_array($s)){
-        if ($ID_CATEGORIA==$row[0]){
-        $boleano=true;
-        }
-    }
-    if (!$boleano){
-        echo "no existe el dato de la llave primaria";
-    }else{
-        $isql="DELETE FROM SYSTEM.CATEGORIA WHERE ID_CATEGORIA=:ID_CATEGORIA";
-        $stmt=oci_parse($conn,$isql);
-        oci_bind_by_name($stmt,":ID_CATEGORIA",$ID_CATEGORIA);
-        $r=oci_execute($stmt,OCI_DEFAULT);
-        oci_commit($conn);
-        echo "DATOS ELIMINADOS CORRECTAMENTE <br /> <br />";
-        $s=oci_parse($conn, "SELECT * FROM CATEGORIA");
-        $res= oci_execute($s);
-        echo "registros existentes <br/> <br />";
-        while($row=oci_fetch_array($s)){
-            echo "ID_CATEGORIA||:      ".$row[0]." ||    NOMBRE   :||".$row[1]."||    PUBLICO   :||".$row[2]."||    MARCA  :||".$row[3]."
-            <br /> _____________________________________________________________________________________________________________________________________________________________________________________________________________|  <br/ >";
-                    
+    <?php
+    oci_free_statement($stid);
+    oci_close($conexion);
+    ?>
+
+    <script>
+        // Mostrar el mensaje por 2 segundos y luego ocultarlo
+        document.addEventListener('DOMContentLoaded', function () {
+            var mensaje = document.getElementById('mensaje');
+            if (mensaje.innerHTML !== '') {
+                mensaje.style.display = 'block';
+                setTimeout(function () {
+                    mensaje.style.display = 'none';
+                }, 2000);
             }
-            
-         }
-    }
-?>
+        });
+    </script>
+</body>
+</section>
+</html>

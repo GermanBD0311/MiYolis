@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="tablas.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CATEGORÍAS</title>
+    <title>STOCK</title>
     <style>
         .mensaje {
             background-color: #ff66b2;
@@ -18,8 +18,8 @@
 </head>
 <header>
     <img id="logo" src="logotablas.jpeg" alt="Logotipo de la empresa">
-    <h1>CATEGORÍAS</h1>
-    <button type="submit" name="principal" id="principal"><a href="Categoria.html">Volver </a></button>
+    <h1>STOCK</h1>
+    <button type="submit" name="principal" id="principal"><a href="Stock.html">Volver </a></button>
 </header>
 <section class="section1">
 <body>
@@ -33,72 +33,69 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $idCategoria = isset($_POST['ID_CATEGORIA']) ? $_POST['ID_CATEGORIA'] : null;
+        $idStock = isset($_POST['ID_STOCK']) ? $_POST['ID_STOCK'] : null;
 
         if (isset($_POST['insertar'])) {
             // Realizar la inserción
-            $nombre = $_POST['NOMBRE']; 
-            $publico = $_POST['PUBLICO'];
-            $marca = $_POST['MARCA'];
+            $idArticulo = $_POST['ID_ARTICULO']; 
+            $stock = $_POST['STOCK'];
 
-            $insertar = "INSERT INTO categoria (ID_CATEGORIA, NOMBRE, PUBLICO, MARCA)
-                         VALUES ('$idCategoria', '$nombre', '$publico', '$marca')";
+            $insertar = "INSERT INTO stock (ID_STOCK, ID_ARTICULO, STOCK)
+                         VALUES ('$idStock', '$idArticulo', '$stock')";
             $stid = oci_parse($conexion, $insertar);
             oci_execute($stid);
             $mensaje = 'Inserción realizada con éxito.';
 
             // Consultar y mostrar los resultados actualizados
-            $consulta = 'SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA ORDER BY ID_CATEGORIA';
+            $consulta = 'SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK ORDER BY ID_STOCK';
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['eliminar'])) {
             // Realizar la eliminación
-            $eliminar = "DELETE FROM categoria WHERE ID_CATEGORIA = '$idCategoria'";
+            $eliminar = "DELETE FROM stock WHERE ID_STOCK = '$idStock'";
             $stid = oci_parse($conexion, $eliminar);
             oci_execute($stid);
             $mensaje = 'Eliminación realizada con éxito.';
 
-            // Consultar todas las categorías después de la eliminación
-            $consulta = 'SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA ORDER BY ID_CATEGORIA';
+            // Consultar todos los registros después de la eliminación
+            $consulta = 'SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK ORDER BY ID_STOCK';
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['actualizar'])) {
             // Realizar la actualización
-            $nombre = $_POST['NOMBRE'];
-            $publico = $_POST['PUBLICO'];
-            $marca = $_POST['MARCA'];
+            $idArticulo = $_POST['ID_ARTICULO'];
+            $stock = $_POST['STOCK'];
 
-            $actualizar = "UPDATE categoria
-                           SET NOMBRE = '$nombre', PUBLICO = '$publico',
-                               MARCA = '$marca'
-                           WHERE ID_CATEGORIA = '$idCategoria'";
+            $actualizar = "UPDATE stock
+                           SET ID_ARTICULO = '$idArticulo', STOCK = '$stock'
+                           WHERE ID_STOCK = '$idStock'";
             $stid = oci_parse($conexion, $actualizar);
             oci_execute($stid);
             $mensaje = 'Actualización realizada con éxito.';
 
             // Consultar y mostrar los resultados actualizados
-            $consulta = "SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA WHERE ID_CATEGORIA = '$idCategoria'";
+            $consulta = "SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK WHERE ID_STOCK = '$idStock'";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['buscar'])) {
-            // Si es una búsqueda, consulta todas las categorías o una específica
-            if ($idCategoria !== null) {
-                $consulta = "SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA WHERE ID_CATEGORIA = '$idCategoria'";
+            // Si es una búsqueda, consulta todos los registros o uno específico
+            if ($idStock !== null) {
+                $consulta = "SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK WHERE ID_STOCK = '$idStock'";
             } else {
-                $consulta = 'SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA ORDER BY ID_CATEGORIA';
+                $consulta = 'SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK ORDER BY ID_STOCK';
             }
 
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
-        } elseif (isset ($_POST ['consultar'])) {
-            // Consultar todas las categorías
-            $consulta = "SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA ORDER BY ID_CATEGORIA";
+        } elseif (isset($_POST['consultar'])) {
+            // Consultar todos los registros
+            $consulta = "SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK ORDER BY ID_STOCK";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         }
     } else {
-        // Consultar todas las categorías por defecto
-        $consulta = 'SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA ORDER BY ID_CATEGORIA';
+        // Consultar todos los registros por defecto
+        $consulta = 'SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK ORDER BY ID_STOCK';
         $stid = oci_parse($conexion, $consulta);
         oci_execute($stid);
     }
@@ -110,20 +107,18 @@
     <!-- Mostrar los resultados en una tabla HTML -->
     <table border="1">
         <tr>
-            <th>ID Categoría</th>
-            <th>Nombre</th>
-            <th>Público</th>
-            <th>Marca</th>
+            <th>ID Stock</th>
+            <th>ID Artículo</th>
+            <th>Stock</th>
         </tr>
 
         <?php
         // Cambio en la verificación de filas
         while ($fila = oci_fetch_assoc($stid)) {
             echo '<tr>';
-            echo '<td>' . $fila['ID_CATEGORIA'] . '</td>';
-            echo '<td>' . $fila['NOMBRE'] . '</td>';
-            echo '<td>' . $fila['PUBLICO'] . '</td>';
-            echo '<td>' . $fila['MARCA'] . '</td>';
+            echo '<td>' . $fila['ID_STOCK'] . '</td>';
+            echo '<td>' . $fila['ID_ARTICULO'] . '</td>';
+            echo '<td>' . $fila['STOCK'] . '</td>';
             echo '</tr>';
         }
         ?>

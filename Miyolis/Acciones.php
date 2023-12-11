@@ -7,26 +7,27 @@
     <title>CLIENTES</title>
     <style>
         .mensaje {
-            background-color: #ff66b2; /* Color rosa claro */
-            color: #0d0808; /* Texto blanco */
+            background-color: #ff66b2;
+            color: #0d0808; 
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
             display: none;
         }
-
     </style>
 </head>
 <header>
     <img id="logo" src="logotablas.jpeg" alt="Logotipo de la empresa">
     <h1>CLIENTES</h1>
+    <div class="botones">
+
     <button type="submit" name="principal" id="principal"><a href="Clientes.html">Volver </a></button>
+    </div>
 </header>
 <section class="section1">
 <body>
     <?php
-    $mensaje = ''; // Inicializar el mensaje
-
+    $mensaje = ''; 
     $conexion = oci_connect('system', 'huracan0311', 'localhost/xe');
 
     if (!$conexion) {
@@ -39,7 +40,7 @@
 
         if (isset($_POST['insertar'])) {
             // Realizar la inserción
-            $nombre = $_POST['NOMBRE']; // Ajustar según tus campos
+            $nombre = $_POST['NOMBRE']; 
             $apellidoP = $_POST['APELLIDO_P'];
             $apellidoM = $_POST['APELLIDO_M'];
             $telefono = $_POST['TELEFONO'];
@@ -49,15 +50,24 @@
             $stid = oci_parse($conexion, $insertar);
             oci_execute($stid);
             $mensaje = 'Inserción realizada con éxito.';
+
+            // Consultar y mostrar los resultados actualizados
+            $consulta = 'SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES ORDER BY ID_CLIENTE';
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
         } elseif (isset($_POST['eliminar'])) {
             // Realizar la eliminación
             $eliminar = "DELETE FROM clientes WHERE ID_CLIENTE = '$idCliente'";
             $stid = oci_parse($conexion, $eliminar);
             oci_execute($stid);
             $mensaje = 'Eliminación realizada con éxito.';
+
+            // Consultar todos los clientes después de la eliminación
+            $consulta = 'SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES ORDER BY ID_CLIENTE';
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
         } elseif (isset($_POST['actualizar'])) {
             // Realizar la actualización
-            // Ajusta según tus campos para actualizar
             $nombre = $_POST['NOMBRE'];
             $apellidoP = $_POST['APELLIDO_P'];
             $apellidoM = $_POST['APELLIDO_M'];
@@ -70,13 +80,36 @@
             $stid = oci_parse($conexion, $actualizar);
             oci_execute($stid);
             $mensaje = 'Actualización realizada con éxito.';
-        }
-    }
 
-    // Realizar la consulta después de realizar la acción
-    $consulta = 'SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES ORDER BY ID_CLIENTE';
-    $stid = oci_parse($conexion, $consulta);
-    oci_execute($stid);
+            // Consultar y mostrar los resultados actualizados
+            $consulta = "SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES WHERE ID_CLIENTE = '$idCliente'";
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+        } elseif (isset($_POST['buscar'])) {
+            // Si es una búsqueda, consulta todos los clientes o uno específico
+            if ($idCliente !== null) {
+                $consulta = "SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES WHERE ID_CLIENTE = '$idCliente'";
+            } else {
+                $consulta = 'SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES ORDER BY ID_CLIENTE';
+            }
+
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+        
+        }elseif (isset ($_POST ['consultar'])){
+
+            $busqueda = "SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES ORDER BY ID_CLIENTE ";
+            
+            $stid = oci_parse($conexion, $busqueda);
+            oci_execute($stid);
+        
+        }
+    } else {
+        // Consultar todos los clientes por defecto
+        $consulta = 'SELECT ID_CLIENTE, NOMBRE, APELLIDO_P, APELLIDO_M, TELEFONO FROM CLIENTES ORDER BY ID_CLIENTE';
+        $stid = oci_parse($conexion, $consulta);
+        oci_execute($stid);
+    }
     ?>
 
     <!-- Mostrar el mensaje en una caja -->
@@ -93,6 +126,7 @@
         </tr>
 
         <?php
+        // Cambio en la verificación de filas
         while ($fila = oci_fetch_assoc($stid)) {
             echo '<tr>';
             echo '<td>' . $fila['ID_CLIENTE'] . '</td>';
@@ -111,7 +145,7 @@
     ?>
 
     <script>
-        // Mostrar el mensaje por 1 segundo y luego ocultarlo
+        // Mostrar el mensaje por 2 segundos y luego ocultarlo
         document.addEventListener('DOMContentLoaded', function () {
             var mensaje = document.getElementById('mensaje');
             if (mensaje.innerHTML !== '') {
@@ -124,6 +158,4 @@
     </script>
 </body>
 </section>
-</html>
-                 
-   
+</
