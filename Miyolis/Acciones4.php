@@ -38,7 +38,7 @@
         if (isset($_POST['insertar'])) {
             // Realizar la inserción
             $idArticulo = $_POST['ID_ARTICULO']; 
-            $stock = $_POST['STOCK'];
+            $stock = $_POST['Stock'];
 
             $insertar = "INSERT INTO stock (ID_STOCK, ID_ARTICULO, STOCK)
                          VALUES ('$idStock', '$idArticulo', '$stock')";
@@ -47,7 +47,7 @@
             $mensaje = 'Inserción realizada con éxito.';
 
             // Consultar y mostrar los resultados actualizados
-            $consulta = 'SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK ORDER BY ID_STOCK';
+            $consulta = "SELECT ID_STOCK, ID_ARTICULO, STOCK FROM STOCK WHERE ID_STOCK= '$idStock'";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['eliminar'])) {
@@ -64,7 +64,7 @@
         } elseif (isset($_POST['actualizar'])) {
             // Realizar la actualización
             $idArticulo = $_POST['ID_ARTICULO'];
-            $stock = $_POST['STOCK'];
+            $stock = $_POST['Stock'];
 
             $actualizar = "UPDATE stock
                            SET ID_ARTICULO = '$idArticulo', STOCK = '$stock'

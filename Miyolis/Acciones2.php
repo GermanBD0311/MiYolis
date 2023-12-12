@@ -21,6 +21,9 @@
     <h1>ARTÍCULOS</h1>
     <button type="submit" name="principal" id="principal"><a href="Articulo.html">Volver </a></button>
 </header>
+<div class="text-right mb-2">
+    <a href="VISTA/Reporte Articulos.php" target="_blank" class="btn btn-succes"><i class="fad fa-file-pdf"></i> Imprimir ARTICULOS </a>
+    </div>
 <section class="section1">
 <body>
     <?php
@@ -38,8 +41,8 @@
         if (isset($_POST['insertar'])) {
             // Realizar la inserción
             $idCategoria = $_POST['ID_CATEGORIA']; 
-            $precio = $_POST['PRECIO'];
-            $nombre = $_POST['NOMBRE'];
+            $precio = $_POST['Precio'];
+            $nombre = $_POST['Nombre'];
 
             $insertar = "INSERT INTO articulo (ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE)
                          VALUES ('$idArticulo', '$idCategoria', '$precio', '$nombre')";
@@ -48,7 +51,7 @@
             $mensaje = 'Inserción realizada con éxito.';
 
             // Consultar y mostrar los resultados actualizados
-            $consulta = 'SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO ORDER BY ID_ARTICULO';
+            $consulta = "SELECT ID_ARTICULO, ID_CATEGORIA, PRECIO, NOMBRE FROM ARTICULO  WHERE ID_ARTICULO ='$idArticulo'";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['eliminar'])) {
@@ -65,8 +68,8 @@
         } elseif (isset($_POST['actualizar'])) {
             // Realizar la actualización
             $idCategoria = $_POST['ID_CATEGORIA'];
-            $precio = $_POST['PRECIO'];
-            $nombre = $_POST['NOMBRE'];
+            $precio = $_POST['Precio'];
+            $nombre = $_POST['Nombre'];
 
             $actualizar = "UPDATE articulo
                            SET ID_CATEGORIA = '$idCategoria', PRECIO = '$precio',

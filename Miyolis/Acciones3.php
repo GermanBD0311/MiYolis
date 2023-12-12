@@ -38,19 +38,19 @@
         if (isset($_POST['insertar'])) {
             // Realizar la inserción
             $idArticulo = $_POST['ID_ARTICULO']; 
-            $nombre = $_POST['NOMBRE'];
-            $telefono = $_POST['TELEFONO'];
+            $nombre = $_POST['Nombre'];
+            $telefono = $_POST['Telefono'];
             $numCuenta1 = $_POST['NUM_CUENTA1'];
             $numCuenta2 = $_POST['NUM_CUENTA2'];
 
-            $insertar = "INSERT INTO proveedor (ID_PROVEEDOR, ID_ARTICULO, NOMBRE, TELEFONO, NUM_CUENTA1, NUM_CUENTA2)
+            $insertar = "INSERT INTO proveedor (ID_PROVEEDOR, ID_ARTICULO, Nombre,Telefono, NUM_CUENTA1, NUM_CUENTA2)
                          VALUES ('$idProveedor', '$idArticulo', '$nombre', '$telefono', '$numCuenta1', '$numCuenta2')";
             $stid = oci_parse($conexion, $insertar);
             oci_execute($stid);
             $mensaje = 'Inserción realizada con éxito.';
 
             // Consultar y mostrar los resultados actualizados
-            $consulta = 'SELECT ID_PROVEEDOR, ID_ARTICULO, NOMBRE, TELEFONO, NUM_CUENTA1, NUM_CUENTA2 FROM PROVEEDOR ORDER BY ID_PROVEEDOR';
+            $consulta = "SELECT ID_PROVEEDOR, ID_ARTICULO, NOMBRE, TELEFONO, NUM_CUENTA1, NUM_CUENTA2 FROM PROVEEDOR WHERE ID_PROVEEDOR = '$idProveedor'";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['eliminar'])) {
@@ -67,8 +67,8 @@
         } elseif (isset($_POST['actualizar'])) {
             // Realizar la actualización
             $idArticulo = $_POST['ID_ARTICULO'];
-            $nombre = $_POST['NOMBRE'];
-            $telefono = $_POST['TELEFONO'];
+            $nombre = $_POST['Nombre'];
+            $telefono = $_POST['Telefono'];
             $numCuenta1 = $_POST['NUM_CUENTA1'];
             $numCuenta2 = $_POST['NUM_CUENTA2'];
 

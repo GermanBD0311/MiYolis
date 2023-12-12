@@ -23,7 +23,7 @@
     
 </header>
 <div class="text-right mb-2">
-    <a href="VISTA/PruebaV.php" target="_blank" class="btn btn-succes"><i class="fad fa-file-pdf"></i> Imprimir Apartado </a>
+    <a href="VISTA/Reporte apartados.php" target="_blank" class="btn btn-succes"><i class="fad fa-file-pdf"></i> Imprimir Apartado </a>
     </div>
 <section class="section1">
 <body>
@@ -42,18 +42,18 @@
         if (isset($_POST['insertar'])) {
             // Realizar la inserción
             $idCliente = $_POST['ID_CLIENTE']; 
-            $fecha = $_POST['FECHA'];
-            $monto = $_POST['MONTO'];
+            $fecha = $_POST['Fecha'];
+            $monto = $_POST['Monto'];
             $idArticulo = $_POST['ID_ARTICULO'];
 
-            $insertar = "INSERT INTO apartado (ID_APARTADO, ID_CLIENTE, FECHA, MONTO, ID_ARTICULO)
+            $insertar = "INSERT INTO apartado (ID_APARTADO, ID_CLIENTE, Fecha, Monto, ID_ARTICULO)
                          VALUES ('$idApartado', '$idCliente', '$fecha', '$monto', '$idArticulo')";
             $stid = oci_parse($conexion, $insertar);
             oci_execute($stid);
             $mensaje = 'Inserción realizada con éxito.';
 
             // Consultar y mostrar los resultados actualizados
-            $consulta = 'SELECT ID_APARTADO, ID_CLIENTE, FECHA, MONTO, ID_ARTICULO FROM APARTADO ORDER BY ID_APARTADO';
+            $consulta = "SELECT ID_APARTADO, ID_CLIENTE, FECHA, MONTO, ID_ARTICULO FROM APARTADO WHERE ID_APARTADO = '$idApartado'";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['eliminar'])) {
@@ -70,13 +70,13 @@
         } elseif (isset($_POST['actualizar'])) {
             // Realizar la actualización
             $idCliente = $_POST['ID_CLIENTE'];
-            $fecha = $_POST['FECHA'];
-            $monto = $_POST['MONTO'];
+            $fecha = $_POST['Fecha'];
+            $monto = $_POST['Monto'];
             $idArticulo = $_POST['ID_ARTICULO'];
 
             $actualizar = "UPDATE apartado
-                           SET ID_CLIENTE = '$idCliente', FECHA = '$fecha',
-                               MONTO = '$monto', ID_ARTICULO = '$idArticulo'
+                           SET ID_CLIENTE = '$idCliente', Fecha = '$fecha',
+                               Monto = '$monto', ID_ARTICULO = '$idArticulo'
                            WHERE ID_APARTADO = '$idApartado'";
             $stid = oci_parse($conexion, $actualizar);
             oci_execute($stid);

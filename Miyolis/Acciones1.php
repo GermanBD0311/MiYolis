@@ -37,9 +37,9 @@
 
         if (isset($_POST['insertar'])) {
             // Realizar la inserción
-            $nombre = $_POST['NOMBRE']; 
-            $publico = $_POST['PUBLICO'];
-            $marca = $_POST['MARCA'];
+            $nombre = $_POST['Nombre']; 
+            $publico = $_POST['Publico'];
+            $marca = $_POST['Marca'];
 
             $insertar = "INSERT INTO categoria (ID_CATEGORIA, NOMBRE, PUBLICO, MARCA)
                          VALUES ('$idCategoria', '$nombre', '$publico', '$marca')";
@@ -48,7 +48,7 @@
             $mensaje = 'Inserción realizada con éxito.';
 
             // Consultar y mostrar los resultados actualizados
-            $consulta = 'SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA ORDER BY ID_CATEGORIA';
+            $consulta = "SELECT ID_CATEGORIA, NOMBRE, PUBLICO, MARCA FROM CATEGORIA WHERE ID_CATEGORIA =' $idCategoria'";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
         } elseif (isset($_POST['eliminar'])) {
@@ -64,9 +64,9 @@
             oci_execute($stid);
         } elseif (isset($_POST['actualizar'])) {
             // Realizar la actualización
-            $nombre = $_POST['NOMBRE'];
-            $publico = $_POST['PUBLICO'];
-            $marca = $_POST['MARCA'];
+            $nombre = $_POST['Nombre'];
+            $publico = $_POST['Publico'];
+            $marca = $_POST['Marca'];
 
             $actualizar = "UPDATE categoria
                            SET NOMBRE = '$nombre', PUBLICO = '$publico',
